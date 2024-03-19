@@ -27,6 +27,20 @@
       "usuario": "NataliaSalazar",
       "contraseña": "123456",
       "numeroTelefonico": "+526691426053"
+    },
+    {
+      "id": "bd1d",
+      "nombre": "Elena Cevallos",
+      "usuario": "elena123",
+      "contraseña": "123",
+      "numeroTelefonico": "1234643"
+    },
+    {
+      "id": "f9ec",
+      "nombre": "Gloria Tellez",
+      "usuario": "GloriaIrene",
+      "contraseña": "123",
+      "numeroTelefonico": "3465ye56"
     }
   ]
 }

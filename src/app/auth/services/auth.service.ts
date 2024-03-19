@@ -18,7 +18,7 @@ export class AuthService {
 
   get currentUser(): User | undefined {
     if(!this.user) return undefined;
-    return this.user;
+    return structuredClone(this.user);
   }
 
   login(usuario: string, password: string): Observable<User[]> | undefined {
@@ -27,15 +27,16 @@ export class AuthService {
         tap(users =>{
           if(users.length > 0){
             this.user = users[0];
-            localStorage.setItem('token', JSON.stringify(this.user.id));
+            console.log(this.user.id);
+            localStorage.setItem('prototipoToken', JSON.stringify(users[0].id));
           }
         }),
       );
   }
 
   checkAuthStatus(): Observable<boolean> {
-    if(!localStorage.getItem('token')) return of(false);
-    const token = localStorage.getItem('token');
+    if(!localStorage.getItem('prototipoToken')) return of(false);
+    const token = localStorage.getItem('prototipoToken');
     return this.http.get<User>(`${this.apiData}/${token}`).
       pipe(
         tap(user => this.user = user),
@@ -45,7 +46,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('prototipoToken');
     this.user = undefined;
   }
 
@@ -54,7 +55,7 @@ export class AuthService {
       .pipe(
         tap(newUser => {
           this.user = newUser;
-          localStorage.setItem('token', JSON.stringify(newUser.id));
+          localStorage.setItem('prototipoToken', JSON.stringify(newUser.id));
         })
       );
   }

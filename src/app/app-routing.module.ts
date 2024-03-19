@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './alumnos/pages/home-page/home-page.component';
+import { canActivatePublicGuard, canMatchPublicGuard } from './auth/guards/public.guard';
+import { canActivateAuthGuard, canMatchAuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    // canActivate: [canActivatePublicGuard],
+    // canMatch: [canMatchPublicGuard],
   },
   {
     path: 'alumnos',
-    component: HomePageComponent
+    loadChildren: () => import('./alumnos/alumnos.module').then(m => m.AlumnosModule),
+    // canActivate: [canActivateAuthGuard],
+    // canMatch: [canMatchAuthGuard],
   },
-  // {
-  //   path: 'dashboard',
-  //   // loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-  // },
   {
     path: '',
     redirectTo: 'auth',

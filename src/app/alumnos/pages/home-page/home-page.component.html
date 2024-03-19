@@ -1,1 +1,36 @@
-<p class="text-center text-3xl">Welcome {{ user?.nombre }}!!</p>
+
+
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px'}"
+              class="p-0">
+    <div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
+      <span class="text-2xl te">{{ user?.nombre }}</span>
+
+    </div>
+    <mat-nav-list>
+      <mat-list-item
+        *ngFor="let item of sidebarItems"
+        [routerLink]="item.url"
+        (click)="sidenav.toggle()"
+      >
+        <div class="flex items-center gap-2">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span mat-line>{{ item.name }}</span>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="black" [ngStyle]="{ background: '#00000045'}">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon color="white">menu</mat-icon>
+      </button>
+
+    </mat-toolbar>
+    <div class="container m-[0_auto] mt-4">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
