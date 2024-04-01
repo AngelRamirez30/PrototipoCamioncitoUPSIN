@@ -9,8 +9,6 @@ import { AlumnosService } from '../../services/alumnos.service';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent {
-
-
   constructor(
     private authService: AuthService,
     private alumnosService: AlumnosService,
@@ -31,7 +29,15 @@ export class HomePageComponent {
     this.router.navigate(['/auth/login']);
   }
 
+<<<<<<< HEAD
   // get user(): string {
   //   return this.alumnosService.user;
   // }
+=======
+  get user(): User | undefined {
+    return this.authService.currentUser;
+  }
+
+  map_image = 'https://i.imgur.com/TN3iixl.png';
+>>>>>>> 74f9ad432ea505ba10da739c2425b0cf97ec979e
 }
