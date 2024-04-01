@@ -8,8 +8,6 @@ import { Router } from '@angular/router';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent {
-
-
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -32,4 +30,6 @@ export class HomePageComponent {
   get user(): User | undefined {
     return this.authService.currentUser;
   }
+
+  map_image = 'https://i.imgur.com/TN3iixl.png';
 }
