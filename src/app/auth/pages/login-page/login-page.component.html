@@ -3,15 +3,15 @@
   <div class="flex gap-4 w-full items-center">
     <mat-icon class="mb-4">person</mat-icon>
     <mat-form-field class="w-full">
-      <mat-label>Usuario</mat-label>
-      <input type="text" matInput placeholder="Nombre de usuario" formControlName="usuario">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput placeholder="Ingrese su email" formControlName="email">
     </mat-form-field>
   </div>
   <div class="flex gap-4 w-full items-center">
     <mat-icon class="mb-4">lock</mat-icon>
     <mat-form-field class="w-full">
       <mat-label>Contraseña</mat-label>
-      <input type="password" matInput placeholder="Contraseña" formControlName="contraseña">
+      <input type="password" matInput placeholder="Contraseña" formControlName="password">
     </mat-form-field>
   </div>
 
@@ -20,6 +20,7 @@
     Ingresar
   </button>
   <div class="flex justify-end mt-5">
-    <a class="hover:text-indigo-600 transition-all" routerLink="/auth/register">¿Aun no tienes cuenta? Registrate</a>
+    <!-- <a class="hover:text-indigo-600 transition-all" routerLink="/auth/register">¿Aun no tienes cuenta? Registrate</a> -->
+    <a class="hover:text-indigo-600 transition-all" routerLink="/auth/forget-password">¿Olvidaste tu contraseña? Recuperala</a>
   </div>
 </form>

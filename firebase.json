@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "prototipo-camioncito-upsin",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

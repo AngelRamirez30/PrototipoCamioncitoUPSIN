@@ -4,7 +4,7 @@
   <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px'}"
               class="p-0">
     <div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
-      <span class="text-2xl te">{{ user?.nombre }}</span>
+      <span class="text-2xl te"></span>
 
     </div>
     <mat-nav-list>
@@ -18,13 +18,21 @@
           <span mat-line>{{ item.name }}</span>
         </div>
       </mat-list-item>
+      <mat-list-item
+        (click)="onLogout()"
+      >
+        <div class="flex items-center gap-2">
+          <mat-icon matListItemIcon>logout</mat-icon>
+          <span mat-line>Cerrar sesión</span>
+        </div>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="black" [ngStyle]="{ background: '#00000045'}">
       <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon color="white">menu</mat-icon>
+        <mat-icon color="primary">menu</mat-icon>
       </button>
 
     </mat-toolbar>

@@ -5,7 +5,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MaterialModule } from '../material/material.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterPageComponent } from './pages/register-page/register-page.component';
+// import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { ForgetPasswordPageComponent } from './pages/forget-password-page/forget-password-page.component';
 
 
 
@@ -13,7 +14,8 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
   declarations: [
     LayoutPageComponent,
     LoginPageComponent,
-    RegisterPageComponent
+    // RegisterPageComponent,
+    ForgetPasswordPageComponent
   ],
   imports: [
     CommonModule,

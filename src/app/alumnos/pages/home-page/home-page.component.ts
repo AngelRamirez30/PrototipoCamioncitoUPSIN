@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '../../../auth/interfaces/user.interface';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { AlumnosService } from '../../services/alumnos.service';
 
 @Component({
   selector: 'app-home-page',
@@ -12,6 +13,7 @@ export class HomePageComponent {
 
   constructor(
     private authService: AuthService,
+    private alumnosService: AlumnosService,
     private router: Router,
   ){}
 
@@ -29,7 +31,7 @@ export class HomePageComponent {
     this.router.navigate(['/auth/login']);
   }
 
-  get user(): User | undefined {
-    return this.authService.currentUser;
-  }
+  // get user(): string {
+  //   return this.alumnosService.user;
+  // }
 }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "camioncito-v2": {
+      "hosting": {
+        "prototipo-camioncito-upsin": [
+          "camioncito-v2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "camioncito-v2"
+  }
+}

@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { User } from '../interfaces/user.interface';
-import { Observable, catchError, map, of, pipe, tap } from 'rxjs';
+
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,52 +12,85 @@ export class AuthService {
   private apiData = 'http://localhost:3000/usuarios';
 
   private user?: User;
+  private email?: string;
+  private uidUser?: string;
 
   constructor(
-    private http: HttpClient,
-  ){}
+    private fbAuthService: AngularFireAuth,
+    private ngZone: NgZone
+  ){
+    this.fbAuthService.authState.subscribe(user => {
+      if(user){
+        localStorage.setItem('prototipoToken', user.uid);
+      }else{
+        localStorage.removeItem('prototipoToken');
+      }
+    });
+  }
 
   get currentUser(): User | undefined {
     if(!this.user) return undefined;
     return structuredClone(this.user);
   }
 
-  login(usuario: string, password: string): Observable<User[]> | undefined {
-    return this.http.get<User[]>(`${this.apiData}?usuario=${usuario}&contraseña=${password}`).
-      pipe(
-        tap(users =>{
-          if(users.length > 0){
-            this.user = users[0];
-            console.log(this.user.id);
-            localStorage.setItem('prototipoToken', JSON.stringify(users[0].id));
-          }
-        }),
-      );
+  login(email: string, password: string){
+    return this.fbAuthService.signInWithEmailAndPassword(email, password)
+      .then(({user}) => {
+        if(!user) return console.error('No se ha podido logear');
+        console.log(user);
+        this.uidUser = user.uid;
+        localStorage.setItem('prototipoToken', user.uid);
+        this.ngZone.run(() => {
+          console.log('Usuario logeado', this.user);
+        });
+      }).catch(error => {
+        console.error('Error al logear',error);
+      });
   }
 
-  checkAuthStatus(): Observable<boolean> {
-    if(!localStorage.getItem('prototipoToken')) return of(false);
-    const token = localStorage.getItem('prototipoToken');
-    return this.http.get<User>(`${this.apiData}/${token}`).
-      pipe(
-        tap(user => this.user = user),
-        map(user => !!user),
-        catchError(error => of(false)),
-      );
-  }
-
-  logout(): void {
+  logout(){
     localStorage.removeItem('prototipoToken');
-    this.user = undefined;
+    return this.fbAuthService.signOut();
   }
 
-  registerUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiData, user)
-      .pipe(
-        tap(newUser => {
-          this.user = newUser;
-          localStorage.setItem('prototipoToken', JSON.stringify(newUser.id));
-        })
-      );
+  // async isEmailRegistered(email: string): Promise<boolean> {
+  //   try {
+  //     const userRecord = await fetchSignInMethodsForEmail(this.auth, email);
+  //     return userRecord.length > 0;
+  //   } catch (error) {
+  //     console.error('Error al verificar el correo electrónico:', error);
+  //     throw error;
+  //   }
+  // }
+
+  async sendPasswordResetEmail(email: string): Promise<void> {
+    try {
+      await this.fbAuthService.sendPasswordResetEmail(email); // Cambio aquí
+    } catch (error) {
+      console.error('Error al enviar el correo de recuperación de contraseña:', error);
+      throw error;
+    }
   }
+
+  async getUserCurrentEmail(): Promise<string | null> {
+    try {
+      return new Promise((resolve, reject) => {
+        this.fbAuthService.onAuthStateChanged( (user) => {
+          if (user) {
+            this.email = user.email!;
+            console.log({user});
+            resolve(user.email);
+          } else {
+            resolve(null);
+          }
+        }, (error) => {
+          reject(error); // Manejamos cualquier error que ocurra
+        });
+      });
+    } catch (error) {
+      console.error('Error al obtener el correo electrónico del usuario:', error);
+      throw error;
+    }
+  }
+
 }
