@@ -10,6 +10,7 @@ import { Alumn } from '../../../interfaces/alumn.interface';
 })
 export class LayoutPageComponent {
   public alumn!: Alumn;
+  public dataLoaded = false
   constructor(
     private authService: AuthService,
     private alumnosService: AlumnosService,
@@ -20,6 +21,7 @@ export class LayoutPageComponent {
     this.alumnosService.getAlumnoData().subscribe((data) => {
       console.log(data);
       this.alumn = data!;
+      this.dataLoaded = true;
     });
   }
 
