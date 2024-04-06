@@ -1,67 +1,33 @@
-<mat-sidenav-container fullscreen>
-	<mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px'}" class="p-0">
-		<div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
-			<span class="text-2xl te">{{ user?.nombre }}</span>
-
-		</div>
-		<mat-nav-list>
-			<mat-list-item *ngFor="let item of sidebarItems" [routerLink]="item.url" (click)="sidenav.toggle()">
-				<div class="flex items-center gap-2">
-					<mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-					<span mat-line>{{ item.name }}</span>
-				</div>
-			</mat-list-item>
-		</mat-nav-list>
-	</mat-sidenav>
-
-	<mat-sidenav-content>
-		<mat-toolbar color="white" [ngStyle]="{ background: '#194A6E'}" style="height: 60px;">
-			<button mat-icon-button (click)="sidenav.toggle()">
-				<mat-icon color="white" style="-webkit-filter: invert(100%); filter: invert(100%);">arrow_back</mat-icon>
-			</button>
-			<p style="color: white; margin: 0">{{ title }}</p>
-		</mat-toolbar>
-
-		<div class="container m-[0_auto]" style="max-height: calc(100% - 120px); overflow-y: scroll;">
-			<!-- Iterate over travel periods -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-				<!-- Iterate over travel items -->
-				<div *ngFor="let notification of notifications"
-					class="flex p-4 mx-6 my-3 border-b-2 border-gray-200 rounded-3xl" style="background-color: #C3E5FEf0;">
-					<div class="w-1/5 flex items-start justify-center p-2 mt-2">
-						<!-- Icon container (assuming you have an icon variable) -->
-						<mat-icon style="color: #d6bd30; transform: scale(2)">notifications</mat-icon>
-					</div>
-					<div class="w-4/5">
-						<!-- Date -->
-						<div class="text-gray-700 text-xs" style="text-align: end;">{{ notification.time }}</div>
-						<!-- TITLE -->
-						<div class="font-bold text-black mb-2">{{ notification.title }}</div>
-						<!-- MSG -->
-						<div class="text-black mb-2">{{ notification.msg }}</div>
-						<!-- Other content related to the travel item -->
-					</div>
-				</div>
-				<!-- End of travel container -->
-			</div>
-
-			<footer class="fixed bottom-0 left-0 right-0 text-white flex justify-between items-center px-6"
-				style="background-color: #194A6E; height: 60px">
-				<!-- Left Icon -->
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">phone</mat-icon>
-				</div>
-				<!-- Footer Text -->
-				<div>
-					<!-- When haces tus momos en el footer. Quita este texto y cambia los íconos de la izq y der -->
-				</div>
-				<!-- Right Icon -->
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">info</mat-icon>
-				</div>
-			</footer>
-			<router-outlet></router-outlet>
-		</div>
-	</mat-sidenav-content>
-
-</mat-sidenav-container>
+<div
+  class="container m-[0_auto]"
+  style="max-height: calc(100% - 120px); overflow-y: scroll"
+>
+  <!-- Iterate over travel periods -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+    <!-- Iterate over travel items -->
+    <div
+      *ngFor="let notification of notifications"
+      class="flex p-4 mx-6 my-3 border-b-2 border-gray-200 rounded-3xl"
+      style="background-color: #c3e5fef0"
+    >
+      <div class="w-1/5 flex items-start justify-center p-2 mt-2">
+        <!-- Icon container (assuming you have an icon variable) -->
+        <mat-icon style="color: #d6bd30; transform: scale(2)"
+          >notifications</mat-icon
+        >
+      </div>
+      <div class="w-4/5">
+        <!-- Date -->
+        <div class="text-gray-700 text-xs" style="text-align: end">
+          {{ notification.time }}
+        </div>
+        <!-- TITLE -->
+        <div class="font-bold text-black mb-2">{{ notification.title }}</div>
+        <!-- MSG -->
+        <div class="text-black mb-2">{{ notification.msg }}</div>
+        <!-- Other content related to the travel item -->
+      </div>
+    </div>
+    <!-- End of travel container -->
+  </div>
+</div>

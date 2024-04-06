@@ -1,1 +1,63 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px' }" class="p-0">
+    <div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
+      <span class="text-2xl te">{{ alumn.nombre }}</span>
+    </div>
+    <mat-nav-list>
+      <mat-list-item
+        *ngFor="let item of sidebarItems"
+        [routerLink]="item.url"
+        (click)="sidenav.toggle()"
+      >
+        <div class="flex items-center gap-2">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span mat-line>{{ item.name }}</span>
+        </div>
+      </mat-list-item>
+      <mat-list-item (click)="onLogout()">
+        <div class="flex items-center gap-2">
+          <mat-icon matListItemIcon>logout</mat-icon>
+          <span mat-line>Cerrar sesión</span>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar
+      color="white"
+      [ngStyle]="{ background: '#194A6E' }"
+      style="height: 60px"
+    >
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon
+          color="white"
+          style="-webkit-filter: invert(100%); filter: invert(100%)"
+          >menu</mat-icon
+        >
+      </button>
+      <p style="color: white; margin: 0"></p>
+      <!-- No creo que haga falta título-->
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+
+    <footer
+      class="fixed bottom-0 left-0 right-0 text-white flex justify-between items-center px-6"
+      style="background-color: #194a6e; height: 60px"
+    >
+      <!-- Left Icon -->
+      <div>
+        <mat-icon color="white" class="h-10 w-10 inline-block">phone</mat-icon>
+      </div>
+      <!-- Footer Text -->
+      <div>
+        <!-- When haces tus momos en el footer. Quita este texto y cambia los íconos de la izq y der -->
+      </div>
+      <!-- Right Icon -->
+      <div>
+        <mat-icon color="white" class="h-10 w-10 inline-block">info</mat-icon>
+      </div>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

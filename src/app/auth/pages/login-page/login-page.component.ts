@@ -9,6 +9,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs';
+import { FirestoreService } from '../../services/firestore.service';
+import { RoleUser } from '../../../interfaces/user.interface';
 
 @Component({
   selector: 'auth-login-page',
@@ -16,8 +19,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styles: ``,
 })
 export class LoginPageComponent {
-
-
   public loginForm = this.fb.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
@@ -25,6 +26,7 @@ export class LoginPageComponent {
 
   constructor(
     private authService: AuthService,
+    private firestoreService: FirestoreService,
     private router: Router,
     private snackBar: MatSnackBar,
     private fb: FormBuilder
@@ -33,22 +35,57 @@ export class LoginPageComponent {
   onLogin(): void {
     const { email, password } = this.loginForm.value;
     if (email?.trim() && password?.trim()) {
-      this.authService.login(email!, password!).then(() => {
-        // if (user) {
-          this.router.navigateByUrl('/alumnos');
-          this.snackBar.open('Haz ingresado correctamente', 'ok', {
-            duration: 2500,
-          });
-        // } else {
-          // this.snackBar.open('Cuenta inexsistente', undefined, {
-          //   duration: 2500,
-          // });
-          // this.loginForm.reset({
-          //   email: this.loginForm.value.email,
-          //   password: '',
-          // });
-        // }
-      });
+      this.authService
+        .login(email!, password!)
+        .then(({ user }) => {
+          if (user) {
+            this.openSnackBar('Inicio de sesión exitoso', 2500);
+            this.redirigirUsuario(user.uid);
+          } else {
+            throw new Error('Usuario no encontrado');
+          }
+        })
+        .catch((error) => {
+          console.error('Error al iniciar sesión:', error);
+          switch (error.code) {
+            case 'auth/wrong-password':
+              this.openSnackBar('Contraseña incorrecta', 2500);
+              break;
+            case 'auth/user-not-found':
+              this.openSnackBar('Usuario no encontrado', 2500);
+              break;
+            case 'auth/invalid-credential':
+              this.openSnackBar('Credenciales inválidas', 2500);
+              break;
+            case 'auth/invalid-email':
+              this.openSnackBar('Correo inválido', 2500);
+              break;
+          }
+        });
     }
+  }
+
+  openSnackBar(message: string, duration: number) {
+    this.snackBar.open(message, undefined, {
+      duration,
+    });
+  }
+
+  redirigirUsuario(uid: string) {
+    this.authService.getRoleUser(uid).subscribe((user) => {
+      if (user) {
+        const { rol } = user;
+        console.log(rol);
+        switch (rol) {
+          case 'alumno':
+            console.log('llegue');
+            this.router.navigateByUrl('/alumnos/home');
+            break;
+          case 'chofer':
+            this.router.navigate(['/choferes']);
+            break;
+        }
+      }
+    });
   }
 }

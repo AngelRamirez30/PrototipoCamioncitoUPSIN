@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { User } from '../../../auth/interfaces/user.interface';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -28,7 +27,7 @@ export class ConfigurationPageComponent {
     this.router.navigate(['/auth/login']);
   }
 
-  get user(): User | undefined {
+  get user(){
     return this.authService.currentUser;
   }
 

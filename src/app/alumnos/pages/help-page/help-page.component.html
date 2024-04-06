@@ -1,46 +1,11 @@
-<mat-sidenav-container fullscreen>
-	<mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px'}" class="p-0">
-		<div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
-			<span class="text-2xl te">{{ user?.nombre }}</span>
-		</div>
-		<mat-nav-list>
-			<mat-list-item *ngFor="let item of sidebarItems" [routerLink]="item.url" (click)="sidenav.toggle()">
-				<div class="flex items-center gap-2">
-					<mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-					<span mat-line>{{ item.name }}</span>
-				</div>
-			</mat-list-item>
-		</mat-nav-list>
-	</mat-sidenav>
-
-	<mat-sidenav-content>
-		<mat-toolbar color="white" [ngStyle]="{ background: '#194A6E'}" style="height: 60px;">
-			<button mat-icon-button (click)="sidenav.toggle()">
-				<mat-icon color="white" style="-webkit-filter: invert(100%); filter: invert(100%);">arrow_back</mat-icon>
-			</button>
-			<p style="color: white; margin: 0">{{ title }}</p>
-		</mat-toolbar>
-
-		<div class="container m-[0_auto]" style="max-height: calc(100% - 120px); overflow-y: scroll;">
-			<ng-container *ngFor="let questionItem of question">
-				<div class="bg-gray-200 p-3 m-4 rounded-md">
-					<div class="font-bold text-black">{{ questionItem.title }}</div>
-					<div class="text-black mb-2 mt-2">{{ questionItem.answer }}</div>
-				</div>
-			</ng-container>
-
-			<footer class="fixed bottom-0 left-0 right-0 text-white flex justify-between items-center px-6"
-				style="background-color: #194A6E; height: 60px">
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">phone</mat-icon>
-				</div>
-				<div>
-					<!-- Add your footer content here -->
-				</div>
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">info</mat-icon>
-				</div>
-			</footer>
-		</div>
-	</mat-sidenav-content>
-</mat-sidenav-container>
+<div
+  class="container m-[0_auto]"
+  style="max-height: calc(100% - 120px); overflow-y: scroll"
+>
+  <ng-container *ngFor="let questionItem of question">
+    <div class="bg-gray-200 p-3 m-4 rounded-md">
+      <div class="font-bold text-black">{{ questionItem.title }}</div>
+      <div class="text-black mb-2 mt-2">{{ questionItem.answer }}</div>
+    </div>
+  </ng-container>
+</div>

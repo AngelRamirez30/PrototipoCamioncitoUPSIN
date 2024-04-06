@@ -1,51 +1,22 @@
-<mat-sidenav-container fullscreen>
-	<mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px'}" class="p-0">
-		<div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
-			<span class="text-2xl">{{ user?.nombre }}</span>
-		</div>
-		<mat-nav-list>
-			<mat-list-item *ngFor="let item of sidebarItems" [routerLink]="item.url" (click)="sidenav.toggle()">
-				<div class="flex items-center gap-2">
-					<mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-					<span mat-line>{{ item.name }}</span>
-				</div>
-			</mat-list-item>
-		</mat-nav-list>
-	</mat-sidenav>
-
-	<mat-sidenav-content>
-		<mat-toolbar color="white" [ngStyle]="{ background: '#194A6E'}" mat-elevation="4"
-			style="height: 60px; box-shadow: 0px 200px 0px 100px white;"> <!-- BOX SHADOW DOESNT WORK I DONT KNOW WHY -->
-			<button mat-icon-button (click)="sidenav.toggle()">
-				<mat-icon color="white" style="-webkit-filter: invert(100%); filter: invert(100%);">arrow_back</mat-icon>
-			</button>
-			<p style="color: white; margin: 0">{{ title }}</p>
-		</mat-toolbar>
-
-		<div class="container m-0"
-			style="height: calc(100% - 120px); overflow-y: scroll; background-image: url('{{ background_image }}'); background-size: cover; background-position: center;">
-			<ng-container *ngFor="let msg of messages">
-				<div class="pl-10 pr-6 pt-6 pb-1 m-8 rounded-3xl relative" style="background-color: #effffef5;">
-					<img src="{{ chofer_pfp }}" alt="Profile Picture"
-						class="h-12 w-12 rounded-full overflow-hidden absolute left-6 top-0 transform -translate-y-1/2 -translate-x-8"
-						style="object-fit: cover;">
-					<div class="text-black" style="font-weight: 500;">{{ msg.msg }}</div>
-					<div class="italic text-black mb-2 mt-2 text-xs" style="text-align: end;">{{ msg.time }}</div>
-				</div>
-			</ng-container>
-
-			<footer class="fixed bottom-0 left-0 right-0 text-white flex justify-between items-center px-6"
-				style="background-color: #194A6E; height: 60px;">
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">phone</mat-icon>
-				</div>
-				<div>
-					<!-- Add your footer content here -->
-				</div>
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">info</mat-icon>
-				</div>
-			</footer>
-		</div>
-	</mat-sidenav-content>
-</mat-sidenav-container>
+<div
+  class="container m-0"
+  style="height: calc(100% - 120px); overflow-y: scroll; background-image: url('{{ background_image }}'); background-size: cover; background-position: center;"
+>
+  <ng-container *ngFor="let msg of messages">
+    <div
+      class="pl-10 pr-6 pt-6 pb-1 m-8 rounded-3xl relative"
+      style="background-color: #effffef5"
+    >
+      <img
+        src="{{ chofer_pfp }}"
+        alt="Profile Picture"
+        class="h-12 w-12 rounded-full overflow-hidden absolute left-6 top-0 transform -translate-y-1/2 -translate-x-8"
+        style="object-fit: cover"
+      />
+      <div class="text-black" style="font-weight: 500">{{ msg.msg }}</div>
+      <div class="italic text-black mb-2 mt-2 text-xs" style="text-align: end">
+        {{ msg.time }}
+      </div>
+    </div>
+  </ng-container>
+</div>

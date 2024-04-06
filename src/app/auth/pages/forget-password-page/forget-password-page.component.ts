@@ -18,62 +18,54 @@ export class ForgetPasswordPageComponent {
     private router: Router
   ) {}
 
-  // async onReceiveEmail(): Promise<void> {
-  //   try {
-  //     if (this.email.valid) {
-  //       console.log(this.email.value);
-  //       const isRegistered = await this.authService.isEmailRegistered(
-  //         this.email.value!
-  //       );
-  //       if (isRegistered) {
-  //         await this.authService.sendPasswordResetEmail(this.email.value!);
-  //         this.snackBar.open('Email enviado', undefined, {
-  //           duration: 2500,
-  //         });
-  //         console.log('Email enviado');
-  //         this.sended = true;
-  //         // this.router.navigateByUrl('/auth/login');
-  //       } else {
-  //         console.log('Email no registrado');
-  //         this.snackBar.open('Email no registrado', undefined, {
-  //           duration: 2500,
-  //         });
-  //         this.email.reset();
-  //       }
-  //     } else {
-  //       console.log('Correo electrónico inválido');
-  //       this.snackBar.open('Correo electrónico inválido', undefined, {
-  //         duration: 2500,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error('Error al recibir el correo electrónico:', error);
-  //     this.snackBar.open('Error al recibir el correo electrónico', undefined, {
-  //       duration: 2500,
-  //     });
-  //   }
-  // }
 
-  async onReceiveEmail(): Promise<void> {
-    try{
-      if(this.email.valid){
-        await this.authService.sendPasswordResetEmail(this.email.value!);
-        this.snackBar.open('Email enviado', undefined, {
+  async onReceiveEmail() {
+    const email = this.email.value;
+    try {
+      const isRegistered = await this.authService.checkEmailExists(email!);
+      if (isRegistered) {
+        try {
+          await this.authService.resetPassword(email!);
+          this.snackBar.open('Email enviado', undefined, {
+            duration: 2500,
+          });
+        } catch (error) {
+          this.snackBar.open('Error al enviar email, intentelo de nuevo', undefined, {
+            duration: 2500,
+          });
+        }
+      } else {
+        // Manejar el caso cuando el correo electrónico no está registrado
+        console.log('El correo electrónico no está registrado');
+        this.snackBar.open('Email no registrado', undefined, {
           duration: 2500,
         });
-        console.log('Email enviado');
-        this.sended = true;
-      }else{
-        console.log('Correo electrónico inválido');
-        this.snackBar.open('Correo electrónico inválido', undefined, {
-          duration: 2500,
-        });
+        this.email.reset();
       }
-    }catch(error){
-      console.error('Error al recibir el correo electrónico:', error);
-      this.snackBar.open('Error al recibir el correo electrónico', undefined, {
-        duration: 2500,
-      });
+    } catch (error: any) {
+      console.error('Error al iniciar sesión:', error);
+      switch (error.code) {
+        case 'auth/wrong-password':
+          this.snackBar.open('Contraseña incorrecta', undefined, {
+            duration: 2500,
+          });
+          break;
+          case 'auth/user-not-found':
+            this.snackBar.open('Cuenta no encontrada', undefined, {
+              duration: 2500,
+            });
+            break;
+        case 'auth/invalid-credential':
+          this.snackBar.open('Cuenta inexistente', undefined, {
+            duration: 2500,
+          });
+          break;
+        case 'auth/invalid-email':
+          this.snackBar.open('Correo invalido', undefined, {
+            duration: 2500,
+          });
+          break;
+      }
     }
   }
 }

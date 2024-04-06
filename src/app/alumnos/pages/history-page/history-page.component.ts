@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { User } from '../../../auth/interfaces/user.interface';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,7 +7,7 @@ import { Router } from '@angular/router';
   styles: ``
 })
 export class HistoryPageComponent {
-  
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -29,7 +28,7 @@ export class HistoryPageComponent {
     this.router.navigate(['/auth/login']);
   }
 
-  get user(): User | undefined {
+  get user() {
     return this.authService.currentUser;
   }
 
