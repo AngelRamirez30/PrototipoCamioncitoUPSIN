@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // import { canActivateAuthGuard, canMatchAuthGuard } from './auth/guards/auth.guard';
 
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { canActivateAuthGuard, canMatchAuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,6 @@ const routes: Routes = [
   {
     path: 'alumnos',
     loadChildren: () => import('./alumnos/alumnos.module').then(m => m.AlumnosModule),
-    // ...canActivate( () => redirectUnauthorizedTo(['auth']) )
     // canActivate: [canActivateAuthGuard],
     // canMatch: [canMatchAuthGuard],
   },

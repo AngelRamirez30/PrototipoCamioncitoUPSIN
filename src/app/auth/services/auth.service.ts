@@ -16,11 +16,9 @@ import { map } from 'jquery';
   providedIn: 'root',
 })
 export class AuthService {
-  private uidUser?: string;
 
   constructor(
     private fbAuthService: AngularFireAuth,
-    private ngZone: NgZone,
     private firestoreSvc: AngularFirestore
   ) {}
 
@@ -36,15 +34,9 @@ export class AuthService {
     return this.fbAuthService.currentUser;
   }
 
-  get getAuth() {
-    return getAuth();
-  }
-
   async login(email: string, password: string) {
     return this.fbAuthService.signInWithEmailAndPassword(email, password);
   }
-
-
 
   // Método para enviar un correo de recuperación de contraseña
   resetPassword(email: string): Promise<void> {

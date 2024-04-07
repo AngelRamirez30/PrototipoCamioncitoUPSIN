@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { AlumnosService } from '../../services/alumnos.service';
 import { Router } from '@angular/router';
 import { Alumn } from '../../../interfaces/alumn.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './layout-page.component.html',
   styles: ``
 })
-export class LayoutPageComponent implements OnInit{
+export class LayoutPageComponent implements OnInit, OnDestroy{
   public alumn!: Alumn;
-  public dataLoaded = false
+  public dataLoaded = false;
+  private dataSubscription: Subscription = new Subscription();
+
   constructor(
     private authService: AuthService,
     private alumnosService: AlumnosService,
     private router: Router,
+    private snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {
-    this.alumnosService.getAlumnoData().subscribe((data) => {
+    this.dataSubscription.add(this.alumnosService.getAlumnoData().subscribe((data) => {
       this.alumn = data!;
       this.dataLoaded = true;
-    });
+    }));
   }
 
   public sidebarItems = [
@@ -35,16 +40,24 @@ export class LayoutPageComponent implements OnInit{
 
   ];
 
-  onLogout(): void{
+  onLogout(){
     this.authService.logout().then(() => {
-      console.log('logged out');
-      this.router.navigate(['/auth/login']);
+      this.openSnackBar('Sesión cerrada', 2500);
+    })
+    .catch((error) => console.log(error))
+    .finally(() => this.router.navigate(['/auth/login']));
+  }
+
+  public map_image = 'https://i.imgur.com/TN3iixl.png';
+
+
+  openSnackBar(message: string, duration: number) {
+    this.snackBar.open(message, undefined, {
+      duration,
     });
   }
 
-  // get user() {
-  //   return this.authService.currentUser;
-  // }
-
-  public map_image = 'https://i.imgur.com/TN3iixl.png';
+  ngOnDestroy(): void {
+    this.dataSubscription.unsubscribe();
+  }
 }

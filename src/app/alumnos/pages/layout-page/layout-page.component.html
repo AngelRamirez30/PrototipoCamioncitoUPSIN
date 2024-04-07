@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px' }" class="p-0">
     <div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
       <mat-spinner *ngIf="!dataLoaded" class="m-[0_auto]" diameter="40" ></mat-spinner>
-      <span        *ngIf="dataLoaded"  class="text-2xl">{{ alumn.nombre }}</span>
+      <span        *ngIf="dataLoaded && alumn"  class="text-2xl">{{ alumn.nombre }}</span>
     </div>
     <mat-nav-list>
       <mat-list-item
