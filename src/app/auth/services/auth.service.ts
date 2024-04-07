@@ -33,8 +33,6 @@ export class AuthService {
   }
 
   get currentUser() {
-    // if(!this.user) return undefined;
-    // return structuredClone(this.user);
     return this.fbAuthService.currentUser;
   }
 

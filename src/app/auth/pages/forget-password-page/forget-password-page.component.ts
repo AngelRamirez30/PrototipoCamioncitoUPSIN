@@ -15,9 +15,7 @@ export class ForgetPasswordPageComponent {
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private router: Router
   ) {}
-
 
   async onReceiveEmail() {
     const email = this.email.value;
@@ -26,46 +24,36 @@ export class ForgetPasswordPageComponent {
       if (isRegistered) {
         try {
           await this.authService.resetPassword(email!);
-          this.snackBar.open('Email enviado', undefined, {
-            duration: 2500,
-          });
+          this.openSnackBar('Email enviado', 2500);
         } catch (error) {
-          this.snackBar.open('Error al enviar email, intentelo de nuevo', undefined, {
-            duration: 2500,
-          });
+          this.openSnackBar('Error al enviar el correo', 2500);
         }
       } else {
-        // Manejar el caso cuando el correo electrónico no está registrado
-        console.log('El correo electrónico no está registrado');
-        this.snackBar.open('Email no registrado', undefined, {
-          duration: 2500,
-        });
+        this.openSnackBar('Correo no registrado', 2500);
         this.email.reset();
       }
     } catch (error: any) {
       console.error('Error al iniciar sesión:', error);
       switch (error.code) {
         case 'auth/wrong-password':
-          this.snackBar.open('Contraseña incorrecta', undefined, {
-            duration: 2500,
-          });
+          this.openSnackBar('Contraseña incorrecta', 2500);
           break;
-          case 'auth/user-not-found':
-            this.snackBar.open('Cuenta no encontrada', undefined, {
-              duration: 2500,
-            });
-            break;
+        case 'auth/user-not-found':
+          this.openSnackBar('Usuario no encontrado', 2500);
+          break;
         case 'auth/invalid-credential':
-          this.snackBar.open('Cuenta inexistente', undefined, {
-            duration: 2500,
-          });
+          this.openSnackBar('Credenciales inválidas', 2500);
           break;
         case 'auth/invalid-email':
-          this.snackBar.open('Correo invalido', undefined, {
-            duration: 2500,
-          });
+          this.openSnackBar('Correo inválido', 2500);
           break;
       }
     }
+  }
+
+  openSnackBar(message: string, duration: number) {
+    this.snackBar.open(message, undefined, {
+      duration,
+    });
   }
 }

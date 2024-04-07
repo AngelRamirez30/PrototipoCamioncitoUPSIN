@@ -10,7 +10,6 @@ import {
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs';
-import { FirestoreService } from '../../services/firestore.service';
 import { RoleUser } from '../../../interfaces/user.interface';
 
 @Component({
@@ -26,7 +25,6 @@ export class LoginPageComponent {
 
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService,
     private router: Router,
     private snackBar: MatSnackBar,
     private fb: FormBuilder
@@ -36,12 +34,12 @@ export class LoginPageComponent {
     const { email, password } = this.loginForm.value;
     if (email?.trim() && password?.trim()) {
       this.authService
-        .login(email!, password!)
+        .login(email, password)
         .then(({ user }) => {
           if (user) {
             this.openSnackBar('Inicio de sesión exitoso', 2500);
             this.redirigirUsuario(user.uid);
-          } else {
+          }else {
             throw new Error('Usuario no encontrado');
           }
         })
@@ -75,10 +73,8 @@ export class LoginPageComponent {
     this.authService.getRoleUser(uid).subscribe((user) => {
       if (user) {
         const { rol } = user;
-        console.log(rol);
         switch (rol) {
           case 'alumno':
-            console.log('llegue');
             this.router.navigateByUrl('/alumnos/home');
             break;
           case 'chofer':

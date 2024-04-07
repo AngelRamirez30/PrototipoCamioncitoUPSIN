@@ -1,92 +1,62 @@
-<mat-sidenav-container fullscreen>
-	<mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px'}" class="p-0">
-		<div class="mt-4 mb-2 text-center text-semibold text-indigo-500">
-			<span class="text-2xl te"></span>
+<div
+  class="container m-[0_auto]"
+  style="max-height: calc(100% - 120px); overflow-y: scroll"
+>
+  <!-- let this be the user section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div
+      class="col-span-1 md:col-span-2 lg:col-span-3 bg-white p-4 border rounded-lg flex items-center gap-2"
+      style="min-height: 150px"
+    >
+      <!-- User's profile image -->
+      <img
+        [src]="user_pfp"
+        alt="Profile Picture"
+        class="w-24 h-24 mx-auto mb-4 rounded-full"
+      />
 
-		</div>
-		<mat-nav-list>
-			<mat-list-item *ngFor="let item of sidebarItems" [routerLink]="item.url" (click)="sidenav.toggle()">
-				<div class="flex items-center gap-2">
-					<mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-					<span mat-line>{{ item.name }}</span>
-				</div>
-			</mat-list-item>
-		</mat-nav-list>
-	</mat-sidenav>
+      <!-- User's personal data -->
+      <div>
+        <div class="font-bold mb-4">Datos personales</div>
+        <div class="flex justify-between items-center">
+          <!-- <div class="text-black">{{ user }}</div> -->
+        </div>
+        <div class="flex justify-between items-center">
+          <!-- <div class="text-black">{{ user }}</div> -->
+        </div>
+        <div class="flex justify-between items-center">
+          <!-- <div class="text-black">2021030262&#64;upsin.edu.mx</div> -->
+          <!-- Campo de correon't-->
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<mat-sidenav-content>
-		<mat-toolbar color="white" [ngStyle]="{ background: '#194A6E'}" style="height: 60px;">
-			<button mat-icon-button (click)="sidenav.toggle()">
-				<mat-icon color="white" style="-webkit-filter: invert(100%); filter: invert(100%);">arrow_back</mat-icon>
-			</button>
-			<p style="color: white; margin: 0">{{ title }}</p>
-		</mat-toolbar>
-
-		<div class="container m-[0_auto]" style="max-height: calc(100% - 120px); overflow-y: scroll;">
-
-			<!-- let this be the user section -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				<div class="col-span-1 md:col-span-2 lg:col-span-3 bg-white p-4 border rounded-lg flex items-center gap-2"
-				style="min-height: 150px;"
-				>
-					<!-- User's profile image -->
-					<img [src]="user_pfp" alt="Profile Picture" class="w-24 h-24 mx-auto mb-4 rounded-full">
-
-					<!-- User's personal data -->
-					<div>
-						<div class="font-bold mb-4">Datos personales</div>
-						<div class="flex justify-between items-center">
-							<div class="text-black">{{ user }}</div>
-						</div>
-						<div class="flex justify-between items-center">
-							<div class="text-black">{{ user }}</div>
-						</div>
-						<div class="flex justify-between items-center">
-							<div class="text-black">2021030262&#64;upsin.edu.mx</div> <!-- Campo de correon't-->
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- let this be the info section, therere three elements -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				<!-- First info item -->
-				<div class="bg-white p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300">
-					<mat-icon class="text-gray-600">article</mat-icon>
-					<span class="font-bold">TÉRMINOS Y CONDICIONES</span>
-					<mat-icon class="">arrow_forward</mat-icon>
-				</div>
-				<!-- First info item -->
-				<div class="bg-white p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300">
-					<mat-icon class="text-gray-600">lock</mat-icon>
-					<span class="font-bold">RESUMEN DE PRIVACIDAD</span>
-					<mat-icon class="">arrow_forward</mat-icon>
-				</div>
-				<!-- First info item -->
-				<div class="bg-white p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300">
-					<mat-icon class="text-gray-600">supervisor_account</mat-icon>
-					<span class="font-bold">ACERCA DE NOSOTROS</span>
-					<mat-icon class="">arrow_forward</mat-icon>
-				</div>
-			</div>
-
-			<footer class="fixed bottom-0 left-0 right-0 text-white flex justify-between items-center px-6"
-				style="background-color: #194A6E; height: 60px">
-				<!-- Left Icon -->
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">phone</mat-icon>
-				</div>
-				<!-- Footer Text -->
-				<div>
-					<!-- When haces tus momos en el footer. Quita este texto y cambia los íconos de la izq y der -->
-				</div>
-				<!-- Right Icon -->
-				<div>
-					<mat-icon color="white" class="h-10 w-10 inline-block">info</mat-icon>
-				</div>
-			</footer>
-			<router-outlet></router-outlet>
-		</div>
-	</mat-sidenav-content>
-
-</mat-sidenav-container>
+  <!-- let this be the info section, therere three elements -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- First info item -->
+    <div
+      class="p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300"
+    >
+      <mat-icon class="text-gray-600">article</mat-icon>
+      <span class="font-bold">TÉRMINOS Y CONDICIONES</span>
+      <mat-icon class="">arrow_forward</mat-icon>
+    </div>
+    <!-- First info item -->
+    <div
+      class="p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300"
+    >
+      <mat-icon class="text-gray-600">lock</mat-icon>
+      <span class="font-bold">RESUMEN DE PRIVACIDAD</span>
+      <mat-icon class="">arrow_forward</mat-icon>
+    </div>
+    <!-- First info item -->
+    <div
+      class="p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300"
+    >
+      <mat-icon class="text-gray-600">supervisor_account</mat-icon>
+      <span class="font-bold">ACERCA DE NOSOTROS</span>
+      <mat-icon class="">arrow_forward</mat-icon>
+    </div>
+  </div>
+</div>

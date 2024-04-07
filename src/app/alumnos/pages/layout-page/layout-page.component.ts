@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { AlumnosService } from '../../services/alumnos.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Alumn } from '../../../interfaces/alumn.interface';
   templateUrl: './layout-page.component.html',
   styles: ``
 })
-export class LayoutPageComponent {
+export class LayoutPageComponent implements OnInit{
   public alumn!: Alumn;
   public dataLoaded = false
   constructor(
@@ -19,7 +19,6 @@ export class LayoutPageComponent {
 
   ngOnInit(): void {
     this.alumnosService.getAlumnoData().subscribe((data) => {
-      console.log(data);
       this.alumn = data!;
       this.dataLoaded = true;
     });
