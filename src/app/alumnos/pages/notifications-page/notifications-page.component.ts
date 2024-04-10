@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { LayoutPageComponent } from '../layout-page/layout-page.component';
 
 @Component({
   templateUrl: './notifications-page.component.html',
@@ -8,11 +9,12 @@ import { Router } from '@angular/router';
 })
 export class NotificationsPageComponent {
   constructor(
-    private authService: AuthService,
-    private router: Router,
+    private layoutPage: LayoutPageComponent
   ){}
 
-  public title = "NOTIFICACIONES"; // Define the title variable
+  ngOnInit(): void {
+    this.layoutPage.changeHeaderTitle('Notificaciones');
+  }
 
   public notifications = [
     { title: 'Cambio de ruta', msg: 'Accidente registrado sobre Av. Gabriel Leyva, se ha cambiado la ruta habitual.', time: '7:40 a.m.' },

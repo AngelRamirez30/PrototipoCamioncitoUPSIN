@@ -20,6 +20,12 @@ const routes: Routes = [
     // canMatch: [canMatchAuthGuard],
   },
   {
+    path: 'choferes',
+    loadChildren: () => import('./choferes/choferes.module').then(m => m.ChoferesModule),
+    // canActivate: [canActivateAuthGuard],
+    // canMatch: [canMatchAuthGuard],
+  },
+  {
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full',

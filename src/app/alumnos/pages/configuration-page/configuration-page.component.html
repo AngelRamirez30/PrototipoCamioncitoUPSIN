@@ -1,6 +1,6 @@
 <div
-  class="container m-[0_auto]"
-  style="max-height: calc(100% - 120px); overflow-y: scroll"
+  class="w-[min(1100px,90%)] mx-[auto] mt-2"
+  style="overflow-y: scroll"
 >
   <!-- let this be the user section -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -10,39 +10,56 @@
     >
       <!-- User's profile image -->
       <img
+        *ngIf="dataLoaded"
         [src]="user_pfp"
         alt="Profile Picture"
         class="w-24 h-24 mx-auto mb-4 rounded-full"
       />
 
       <!-- User's personal data -->
-      <div>
+      <mat-spinner
+        *ngIf="!dataLoaded"
+        class="m-[0_auto]"
+        diameter="40"
+      ></mat-spinner>
+      <div *ngIf="dataLoaded">
         <div class="font-bold mb-4">Datos personales</div>
         <div class="flex justify-between items-center">
-          <!-- <div class="text-black">{{ user }}</div> -->
+          <div class="text-black">{{ alumn.nombre + " " + alumn.apellidos }}</div>
         </div>
         <div class="flex justify-between items-center">
-          <!-- <div class="text-black">{{ user }}</div> -->
+          <div class="text-black">{{ alumn.numTel }}</div>
         </div>
         <div class="flex justify-between items-center">
-          <!-- <div class="text-black">2021030262&#64;upsin.edu.mx</div> -->
-          <!-- Campo de correon't-->
+          <div class="text-black">{{ alumn.email }}</div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- let this be the info section, therere three elements -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <!-- First info item -->
-    <div
+  <mat-accordion class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <p>{{ conditionTerms.introduction }}</p>
+    <mat-expansion-panel *ngFor="let term of conditionTerms.terms; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b class="font-bold">{{ i + 1 }}. {{ term.title }}</b>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ul>
+        <li class="mb-2" *ngFor="let subterm of term.subterms; let x = index">
+          {{ abc[x]}}. {{ subterm }}
+        </li>
+      </ul>
+    </mat-expansion-panel>
+
+    <!-- <div
       class="p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300"
     >
       <mat-icon class="text-gray-600">article</mat-icon>
       <span class="font-bold">TÉRMINOS Y CONDICIONES</span>
       <mat-icon class="">arrow_forward</mat-icon>
     </div>
-    <!-- First info item -->
     <div
       class="p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300"
     >
@@ -50,13 +67,12 @@
       <span class="font-bold">RESUMEN DE PRIVACIDAD</span>
       <mat-icon class="">arrow_forward</mat-icon>
     </div>
-    <!-- First info item -->
     <div
       class="p-6 mx-4 border rounded-lg flex items-center justify-between bg-gray-300"
     >
       <mat-icon class="text-gray-600">supervisor_account</mat-icon>
       <span class="font-bold">ACERCA DE NOSOTROS</span>
       <mat-icon class="">arrow_forward</mat-icon>
-    </div>
-  </div>
+    </div> -->
+  </mat-accordion>
 </div>

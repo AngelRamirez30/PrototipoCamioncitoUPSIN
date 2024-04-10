@@ -1,0 +1,33 @@
+<div
+  #scrollContainer
+  class="container m-0"
+  style="height: calc(100% - 120px); overflow-y: scroll; background-image: url('{{ background_image }}'); background-size: cover; background-position: center;"
+>
+  @if (dataLoaded){
+  <div class="flex flex-col justify-between">
+    <chofer-message-sended
+      *ngFor="let msg of routeData.messages; let l = last"
+      [ngClass]="{ 'mb-14': l }"
+      [pfp]="chofer_pfp"
+      [message]="msg"
+    ></chofer-message-sended>
+    <!-- <input type="text" [(ngModel)]="messageText" (keypress)="onKeyPress($event)"> -->
+    <mat-form-field class="w-full fixed bottom-9">
+      <input placeholder="Escriba un mensaje" matInput type="text" [(ngModel)]="messageText"  />
+      @if (messageText.trim().length > 0) {
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="sendMessage()"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+      }
+    </mat-form-field>
+  </div>
+
+  }@else {
+  <mat-spinner diameter="60" class="m-[0_auto]"></mat-spinner>
+  }
+</div>

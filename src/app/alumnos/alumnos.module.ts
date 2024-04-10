@@ -12,6 +12,7 @@ import { ConfigurationPageComponent } from './pages/configuration-page/configura
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 import { AlumnosRoutingModule } from './alumnos-routing.module';
+import { ChoferMessageComponent } from './pages/messages-page/components/chofer-message/chofer-message.component';
 
 
 
@@ -25,7 +26,8 @@ import { AlumnosRoutingModule } from './alumnos-routing.module';
     NotificationsPageComponent,
     ReportsPageComponent,
     MessagesPageComponent,
-    ConfigurationPageComponent
+    ConfigurationPageComponent,
+    ChoferMessageComponent
   ],
   imports: [
     CommonModule,

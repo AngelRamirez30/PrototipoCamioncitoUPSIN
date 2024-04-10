@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -16,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import  {MatExpansionModule } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   exports: [
@@ -36,8 +35,7 @@ import  {MatExpansionModule } from '@angular/material/expansion';
     MatSnackBarModule,
     MatToolbarModule,
     MatExpansionModule,
-  ]
+    MatSelectModule,
+  ],
 })
-
-export class MaterialModule { }
-
+export class MaterialModule {}

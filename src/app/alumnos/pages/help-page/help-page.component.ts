@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { LayoutPageComponent } from '../layout-page/layout-page.component';
 
 @Component({
   templateUrl: './help-page.component.html',
@@ -8,30 +9,12 @@ import { Router } from '@angular/router';
 })
 export class HelpPageComponent {
   constructor(
-    private authService: AuthService,
-    private router: Router,
+    private layoutPage: LayoutPageComponent
   ){}
 
-  public sidebarItems = [
-    {name: 'Menú Principal', icon:'home',   url: '/alumnos/'},
-    {name: 'Historial', icon:'schedule',   url: '/alumnos/history'},
-    {name: 'Ayuda',     icon:'headphones', url: '/alumnos/help'},
-    {name: 'Mensajes',  icon:'chat',       url: '/alumnos/messages'},
-    {name: 'Contactos', icon:'contact_emergency',    url: '/alumnos/contacts'},
-    {name: 'Notificaciones', icon:'notifications',   url: '/alumnos/notifications'},
-    {name: 'Configuracion',  icon:'settings',   url: '/alumnos/config'},
-  ];
-
-  onLogout(): void{
-    this.authService.logout();
-    this.router.navigate(['/auth/login']);
+  ngOnInit(): void {
+    this.layoutPage.changeHeaderTitle('Soporte');
   }
-
-  get user() {
-    return this.authService.currentUser;
-  }
-
-  title = "AYUDA"; // Define the title variable
 
   question = [
       { title: '¿Para qué sirve el ícono de contactos?', answer: 'El ícono ubicado en el menú principal permite visualizar y configurar contactos de emergencia.' },

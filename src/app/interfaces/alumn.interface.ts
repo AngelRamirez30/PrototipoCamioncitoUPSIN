@@ -5,6 +5,7 @@ export interface AlumnFirebase {
   numTel: string;
   email: string;
   idCarrera: number;
+  idRuta: number;
   fechaNac: DateFirebase;
   contactosDeEmergencia: ContactoDeEmergencia[];
 }
@@ -32,6 +33,7 @@ export interface Alumn {
   numTel: string;
   email: string;
   idCarrera: number;
+  idRuta: number;
   fechaNac: Date;
   contactosDeEmergencia: ContactoDeEmergencia[];
 }

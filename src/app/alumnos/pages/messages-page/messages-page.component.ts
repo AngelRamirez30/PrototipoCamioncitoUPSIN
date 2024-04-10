@@ -1,45 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Route } from '../../../interfaces/route.interface';
+import { AlumnosService } from '../../services/alumnos.service';
+import { LayoutPageComponent } from '../layout-page/layout-page.component';
 
 @Component({
   templateUrl: './messages-page.component.html',
   styles: ``
 })
-export class MessagesPageComponent {
+export class MessagesPageComponent implements OnInit, OnDestroy{
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
+    private alumnosService: AlumnosService,
+    private layoutPage: LayoutPageComponent,
   ){}
 
-  public sidebarItems = [
-    {name: 'Menú Principal', icon:'home',   url: '/alumnos/'},
-    {name: 'Historial', icon:'schedule',   url: '/alumnos/history'},
-    {name: 'Ayuda',     icon:'headphones', url: '/alumnos/help'},
-    {name: 'Mensajes',  icon:'chat',       url: '/alumnos/messages'},
-    {name: 'Contactos', icon:'contact_emergency',    url: '/alumnos/contacts'},
-    {name: 'Notificaciones', icon:'notifications',   url: '/alumnos/notifications'},
-    {name: 'Configuracion',  icon:'settings',   url: '/alumnos/config'},
-  ];
+  public routeData!: Route;
+  public dataLoaded = false;
+  private routeDataSubscription: Subscription = new Subscription();
 
-  onLogout(): void{
-    this.authService.logout();
-    this.router.navigate(['/auth/login']);
+
+  ngOnInit(): void {
+    this.routeDataSubscription.add(this.alumnosService.getRouteData().subscribe((data) => {
+      console.log(data);
+      this.routeData = data!;
+      this.dataLoaded = true;
+      this.layoutPage.changeHeaderTitle(`Mensajes de ${this.routeData.nombre}`);
+      this.scrollToBottom();
+    }));
+  }
+  ngOnDestroy(): void {
+      this.routeDataSubscription.unsubscribe();
   }
 
-  get user() {
-    return this.authService.currentUser;
+  scrollToBottom(): void {
+    const element = this.scrollContainer.nativeElement;
+    element.scrollTop = element.scrollHeight;
   }
 
   title = "MENSAJES DEL CHOFER"; // Define the title variable
-  chofer_pfp = "https://hips.hearstapps.com/hmg-prod/images/walter-white-secuela-breaking-bad-1560364306.jpg";
+  public chofer_pfp = "https://hips.hearstapps.com/hmg-prod/images/walter-white-secuela-breaking-bad-1560364306.jpg";
   background_image = "https://i.imgur.com/jf3jTVA.jpeg"
 
-  messages = [
-    { msg: 'Me paré a comprar un caffenio, jovenes', time: '6:45 a.m.'},
-    { msg: 'Una llanta se ponchó, el camión se retrasará', time: '6:46 a.m.'},
-    { msg: 'How when haces tus momos en mensajes de alumnos', time: '6:47 a.m.'},
-    { msg: 'El futuro es hoy, ¿oíste, viejo?', time: '6:48 a.m.'}
-  ];
 }

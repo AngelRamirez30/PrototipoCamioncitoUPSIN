@@ -1,22 +1,13 @@
 <div
+  #scrollContainer
   class="container m-0"
   style="height: calc(100% - 120px); overflow-y: scroll; background-image: url('{{ background_image }}'); background-size: cover; background-position: center;"
 >
-  <ng-container *ngFor="let msg of messages">
-    <div
-      class="pl-10 pr-6 pt-6 pb-1 m-8 rounded-3xl relative"
-      style="background-color: #effffef5"
-    >
-      <img
-        src="{{ chofer_pfp }}"
-        alt="Profile Picture"
-        class="h-12 w-12 rounded-full overflow-hidden absolute left-6 top-0 transform -translate-y-1/2 -translate-x-8"
-        style="object-fit: cover"
-      />
-      <div class="text-black" style="font-weight: 500">{{ msg.msg }}</div>
-      <div class="italic text-black mb-2 mt-2 text-xs" style="text-align: end">
-        {{ msg.time }}
-      </div>
-    </div>
-  </ng-container>
+  @if (dataLoaded){
+
+    <chofer-message *ngFor="let msg of routeData.messages" [pfp]="chofer_pfp" [message]="msg"></chofer-message>
+
+  }@else {
+    <mat-spinner diameter="60" class="m-[0_auto]"></mat-spinner>
+  }
 </div>
